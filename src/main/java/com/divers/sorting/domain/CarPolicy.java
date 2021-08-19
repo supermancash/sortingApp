@@ -1,6 +1,7 @@
 package com.divers.sorting.domain;
 
 public class CarPolicy {
+    String id;
     String code;
     String name;
 
@@ -18,5 +19,13 @@ public class CarPolicy {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }
