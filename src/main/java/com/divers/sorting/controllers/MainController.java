@@ -1,41 +1,28 @@
 package com.divers.sorting.controllers;
 
-import com.divers.sorting.domain.CarPolicyListWithParameter;
+import com.divers.sorting.domain.CarPolicy;
 import com.divers.sorting.repository.CarPolicyRepo;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000/")
 public class MainController {
 
-    private CarPolicyRepo carPolicyRepo;
+    private final CarPolicyRepo carPolicyRepo;
 
     public MainController(CarPolicyRepo carPolicyRepo) {
         this.carPolicyRepo = carPolicyRepo;
     }
 
-    @GetMapping(value = "get-car-policy")
+    @GetMapping(value = "get-car-policy") // no hyphens in REST endpoints
     @ResponseBody
-    public CarPolicyListWithParameter getCarPolicy(@RequestParam(required = false) String parameter) {
-
-        CarPolicyListWithParameter carPolicyListWithParameter = carPolicyRepo.getCarPolicyListByParam(parameter);
-        return carPolicyListWithParameter;
+    public List<CarPolicy> getCarPolicy(@RequestParam String parameter) {
+        return carPolicyRepo.getCarPolicyListByParam(parameter);
     }
 
-    @PostMapping(value = "set-car-policy")
-    @ResponseBody
-    public CarPolicyListWithParameter setCarPolicy(@RequestBody CarPolicyListWithParameter carPolicyListWithParameter) {
-
-        carPolicyRepo.updateCarPolicyList(carPolicyListWithParameter);
-        return carPolicyListWithParameter;
+    @PostMapping(value = "set-car-policy") // no hyphens in REST endpoints
+    public void setCarPolicy(@RequestParam String parameter, @RequestBody List<CarPolicy> carPolicies) {
+        carPolicyRepo.updateCarPolicyList(parameter, carPolicies);
     }
-
-    @PostMapping(value = "test")
-    public void testPost(@RequestBody List<String> list){
-        System.out.println(list);
-    }
-
-
 }
